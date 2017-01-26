@@ -1,0 +1,256 @@
+
+<div ng-cloak="">
+  <md-content>
+    <md-tabs md-dynamic-height="" md-border-bottom="">
+      <md-tab label="MCQs">
+        <md-content layout-xs="column" layout-gt-xs="row" ng-controller="MCQCtrl" class="md-padding">
+          <div class="md-inline-form">
+            <md-card id="card" layout-padding="layout-padding">
+              <md-sub-header class="md-no-sticky">create or edit MCQs</md-sub-header>
+              <form name="mcqForm" layout-gt-xs="column">
+                <md-input-container>
+                  <label>name</label>
+                  <input name="name" required="required" ng-model="mcq.name"/>
+                  <div ng-messages="mcqForm.name.$error" md-auto-hide="false" class="errors">
+                    <div ng-message="required">Please enter a name</div>
+                  </div>
+                </md-input-container>
+                <md-radio-group ng-model="mcq.type">
+                  <md-radio-button value="image" class="md-raised md-primary">Images&nbsp;&nbsp;&nbsp;</md-radio-button>
+                  <md-radio-button value="text" class="md-raised md-primary">Text&nbsp;&nbsp;&nbsp;</md-radio-button>
+                </md-radio-group>
+              </form><br/>&nbsp;<br/>
+              <div ng-show="isImageType()">
+                <div flex="flex" style="width:100%;">
+                  <label for="quest">Question</label>
+                  <input id="quest" required="required" type="file" nv-file-select="" uploader="uploader" ng-file-select="{id: 'quest'}" custom-on-change="uploadFileQuest"/>
+                </div><br/>&nbsp;<img ng-src="{{'/extraclass2/uploads/'+mcq.question}}" ng-show="mcq.question!=null" style="width:100px;height:100px"/><br/>
+                <div flex="flex" style="width:100%;">
+                  <label for="ansA">Answer A</label>
+                  <input id="ansA" ng-model="mcq.ansA" required="required" type="file" accept="image/*" nv-file-select="" uploader="uploader" custom-on-change="uploadFileA"/>
+                </div><br/><img ng-src="{{'/extraclass2/uploads/'+mcq.ansA}}" ng-show="mcq.ansA!=null" style="width:100px;height:100px"/><br/>
+                <div flex="flex" style="width:100%;">
+                  <label for="ansB">Answer B</label>
+                  <input id="ansB" ng-model="mcq.ansB" required="required" type="file" accept="image/*" nv-file-select="" uploader="uploader" custom-on-change="uploadFileB"/>
+                </div><br/><img ng-src="{{'/extraclass2/uploads/'+mcq.ansB}}" ng-show="mcq.ansB!=null" style="width:100px;height:100px"/><br/>
+                <div flex="flex" style="width:100%;">
+                  <label for="ansC">Answer C:</label>
+                  <input id="ansC" ng-model="mcq.ansC" required="required" type="file" accept="image/*" nv-file-select="" uploader="uploader" custom-on-change="uploadFileC"/>
+                </div><br/><img ng-src="{{'/extraclass2/uploads/'+mcq.ansC}}" ng-show="mcq.ansC!=null" style="width:100px;height:100px"/><br/>
+                <div flex="flex" style="width:100%;">
+                  <label for="ansD">Answer D:</label>
+                  <input id="ansD" ng-model="mcq.ansD" required="required" type="file" accept="image/*" nv-file-select="" uploader="uploader" custom-on-change="uploadFileD"/>
+                </div><img ng-src="{{'/extraclass2/uploads/'+mcq.ansD}}" ng-show="mcq.ansD!=null" style="width:100px;height:100px"/><br/>
+              </div>
+              <form name="mcqTextual" ng-show="!isImageType()">
+                <md-input-container flex="flex" style="width:100%;">
+                  <label for="quest">Question</label>
+                  <input name="question" id="quest" ng-model="mcq.question" required="required"/>
+                  <div ng-messages="mcqTextual.question.$error" md-auto-hide="false" class="errors">
+                    <div ng-message="required">Please enter a question</div>
+                  </div>
+                </md-input-container><br/>&nbsp;<br/>
+                <md-input-container flex="flex" style="width:100%;">
+                  <label for="ansA">Answer A</label>
+                  <input name="ansA" id="ansA" ng-model="mcq.ansA" required="required"/>
+                  <div ng-messages="mcqTextual.ansA.$error" md-auto-hide="false" class="errors">
+                    <div ng-message="required">Please enter option A</div>
+                  </div>
+                </md-input-container><br/>
+                <md-input-container flex="flex" style="width:100%;">
+                  <label for="ansB">Answer B</label>
+                  <input name="ansB" id="ansB" ng-model="mcq.ansB" required="required"/>
+                  <div ng-messages="mcqTextual.ansB.$error" md-auto-hide="false" class="errors">
+                    <div ng-message="required">Please enter option B</div>
+                  </div>
+                </md-input-container><br/>
+                <md-input-container flex="flex" style="width:100%;">
+                  <label for="ansC">Answer C:</label>
+                  <input name="ansC" id="ansC" ng-model="mcq.ansC" required="required"/>
+                  <div ng-messages="mcqTextual.ansC.$error" md-auto-hide="false" class="errors">
+                    <div ng-message="required">Please enter option C</div>
+                  </div>
+                </md-input-container><br/>
+                <md-input-container flex="flex" style="width:100%;">
+                  <label for="ansD">Answer D:</label>
+                  <input name="ansD" id="ansD" ng-model="mcq.ansD" required="required"/>
+                  <div ng-messages="mcqTextual.ansD.$error" md-auto-hide="false" class="errors">
+                    <div ng-message="required">Please enter option D</div>
+                  </div>
+                </md-input-container>
+              </form>
+              <md-input-container>
+                <label>Answer:</label><br/>&nbsp;<br/>
+                <md-radio-group ng-model="mcq.ans">
+                  <md-radio-button aria-label="A" value="A" class="md-primary">A&nbsp;&nbsp;&nbsp;</md-radio-button>
+                  <md-radio-button aria-label="B" value="B" class="md-primary">B&nbsp;&nbsp;&nbsp;</md-radio-button>
+                  <md-radio-button aria-label="C" value="C" class="md-primary">C&nbsp;&nbsp;&nbsp;</md-radio-button>
+                  <md-radio-button aria-label="D" value="D" class="md-primary">D</md-radio-button>
+                </md-radio-group>
+              </md-input-container><br/>
+              <md-input-container>
+                <label>Explanation:</label><br/>&nbsp;<br/>
+                <md-radio-group ng-model="mcq.explanationType">
+                  <md-radio-button value="image" class="md-raised md-primary">Image&nbsp;&nbsp;&nbsp;</md-radio-button>
+                  <md-radio-button value="text" class="md-raised md-primary">Text&nbsp;&nbsp;&nbsp;</md-radio-button>
+                </md-radio-group>
+              </md-input-container>
+              <form name="explanation">
+                <md-input-container ng-show="!isExplanationImageType()" style="width:100%;">
+                  <label>Explanation:</label>
+                  <input name="text" ng-model="mcq.explanation" required="required"/>
+                  <div ng-messages="explanation.text.$error" md-auto-hide="false" class="errors">
+                    <div ng-message="required">Please enter the explanation</div>
+                  </div>
+                </md-input-container><br/>
+                <div flex="flex" style="width:100%;" ng-show="isExplanationImageType()">
+                  <label for="expImage">Answer D:</label>
+                  <input id="expImage" required="required" ng-model="mcq.explanation" type="file" accept="image/*" nv-file-select="" uploader="uploader" custom-on-change="uploadFileExplanation"/>
+                </div><img ng-src="{{'/extraclass2/uploads/'+mcq.explanation}}" ng-show="mcq.explanation!=null &amp;&amp; isExplanationImageType()" style="width:100px;height:100px"/><br/>
+              </form>
+              <md-input-container>
+                <label>Difficulty:</label><br/>&nbsp;<br/>
+                <md-radio-group ng-model="mcq.difficulty" required="required">
+                  <md-radio-button aria-label="1" value="1" class="md-primary">1&nbsp;&nbsp;&nbsp;</md-radio-button>
+                  <md-radio-button aria-label="2" value="2" class="md-primary">2&nbsp;&nbsp;&nbsp;</md-radio-button>
+                  <md-radio-button aria-label="3" value="3" class="md-primary">3&nbsp;&nbsp;&nbsp;</md-radio-button>
+                </md-radio-group>
+              </md-input-container><br/>
+              <div layout="row" layout-align="center center">
+                <md-input-container>
+                  <md-button ng-click="update()" ng-disabled="!edittingMode || mcqForm.$invalid || (!isImageType() &amp;&amp; mcqTextual.$invalid) || (!isExplanationImageType() &amp;&amp; explanation.$invalid) " class="md-raised md-primary">Update</md-button>
+                </md-input-container>
+                <md-input-container>
+                  <md-button ng-click="add()" ng-disabled="edittingMode || mcqForm.$invalid || (!isImageType() &amp;&amp; mcqTextual.$invalid) || (!isExplanationImageType() &amp;&amp; explanation.$invalid) || validateFiles() " class="md-raised md-primary">Add</md-button>
+                </md-input-container>
+                <md-input-container>
+                  <md-button ng-click="clear()" class="md-raised">Clear</md-button>
+                </md-input-container>
+              </div>
+            </md-card>
+          </div>
+          <md-card layout-padding="layout-padding" flex="flex">
+            <md-list flex="flex">
+              <md-list-item ng-repeat="mcq in mcqList" class="md-2-line">
+                <md-divider></md-divider>
+                <div flex="3" class="md-list-item-text">
+                  <md-button style="text-align: left;max-width:70%;min-width:50%;text-transform:none;">{{mcq.name}}</md-button>
+                </div>
+                <div layout="row" flex="1" class="md-secondary">
+                  <md-button ng-click="edit(mcq)" class="md-icon-button">
+                    <md-icon md-svg-icon="../images/pencil.svg" aria-label="Edit"></md-icon>
+                  </md-button>
+                  <md-button ng-click="mcqList.$remove(mcq)" class="md-icon-button">
+                    <md-icon md-svg-icon="../images/bin.svg" aria-label="Edit"></md-icon>
+                  </md-button>
+                </div>
+              </md-list-item>
+            </md-list>
+          </md-card>
+        </md-content>
+      </md-tab>
+      <md-tab label="Notes">
+        <md-content layout-xs="column" layout-gt-xs="row" ng-controller="NotesCTRL" class="md-padding">
+          <div class="md-inline-form">
+            <md-card id="card" layout-padding="layout-padding">
+              <md-sub-header class="md-no-sticky">create or edit MCQs</md-sub-header>
+              <form name="noteForm" layout-gt-xs="column">
+                <md-input-container>
+                  <label>name</label>
+                  <input name="name" required="required" ng-model="note.name"/>
+                  <div ng-messages="noteForm.name.$error" md-auto-hide="false" class="errors">
+                    <div ng-message="required">Please enter a name</div>
+                  </div>
+                </md-input-container>
+              </form>
+              <div flex="flex" style="width:100%;">
+                <label for="note">Note</label><br/>
+                <input id="note" required="required" type="file" multiple="multiple" accept="" nv-file-select="" uploader="uploader" ng-file-select="{id: 'quest'}"/>
+              </div><br/>&nbsp;
+              <div layout="row" layout-align="center center">
+                <md-input-container>
+                  <md-button ng-click="update()" ng-disabled="!edittingMode || noteForm.$invalid || validateFiles()" class="md-raised md-primary">Update</md-button>
+                </md-input-container>
+                <md-input-container>
+                  <md-button ng-click="add()" ng-disabled="edittingMode || noteForm.$invalid || validateFiles()" class="md-raised md-primary">Add</md-button>
+                </md-input-container>
+                <md-input-container>
+                  <md-button ng-click="clear()" class="md-raised">Clear</md-button>
+                </md-input-container>
+              </div>
+            </md-card>
+          </div>
+          <md-card layout-padding="layout-padding" flex="flex">
+            <md-list flex="flex">
+              <md-list-item ng-repeat="note in noteList" class="md-2-line">
+                <md-divider></md-divider>
+                <div flex="3" class="md-list-item-text">
+                  <md-button style="text-align: left;max-width:70%;min-width:50%;text-transform:none;">{{note.name}}</md-button>
+                </div>
+                <div layout="row" flex="1" class="md-secondary">
+                  <md-button ng-click="edit(note)" class="md-icon-button">
+                    <md-icon md-svg-icon="../images/pencil.svg" aria-label="Edit"></md-icon>
+                  </md-button>
+                  <md-button ng-click="noteList.$remove(note)" class="md-icon-button">
+                    <md-icon md-svg-icon="../images/bin.svg" aria-label="Edit"></md-icon>
+                  </md-button>
+                </div>
+              </md-list-item>
+            </md-list>
+          </md-card>
+        </md-content>
+      </md-tab>
+      <md-tab label="Videos">
+        <md-content layout-xs="column" layout-gt-xs="row" ng-controller="VideosCTRL" class="md-padding">
+          <div class="md-inline-form">
+            <md-card id="card" layout-padding="layout-padding">
+              <md-sub-header class="md-no-sticky">create or edit Video</md-sub-header>
+              <form name="videoForm" layout-gt-xs="column">
+                <md-input-container>
+                  <label>name</label>
+                  <input name="name" required="required" ng-model="video.name"/>
+                  <div ng-messages="videoForm.name.$error" md-auto-hide="false" class="errors">
+                    <div ng-message="required">Please enter a name</div>
+                  </div>
+                </md-input-container>
+              </form>
+              <div flex="flex" style="width:100%;">
+                <label for="video">Note</label><br/>
+                <input id="video" required="required" type="file" multiple="false" accept="" nv-file-select="" uploader="uploader" ng-file-select="{id: 'quest'}"/>
+              </div><br/>&nbsp;
+              <div layout="row" layout-align="center center">
+                <md-input-container>
+                  <md-button ng-click="update()" ng-disabled="!edittingMode || videoForm.$invalid || validateFiles()" class="md-raised md-primary">Update</md-button>
+                </md-input-container>
+                <md-input-container>
+                  <md-button ng-click="add()" ng-disabled="edittingMode || videoForm.$invalid || validateFiles()" class="md-raised md-primary">Add</md-button>
+                </md-input-container>
+                <md-input-container>
+                  <md-button ng-click="clear()" class="md-raised">Clear</md-button>
+                </md-input-container>
+              </div>
+            </md-card>
+          </div>
+          <md-card layout-padding="layout-padding" flex="flex">
+            <md-list flex="flex">
+              <md-list-item ng-repeat="video in videoList" class="md-2-line">
+                <md-divider></md-divider>
+                <div flex="3" class="md-list-item-text">
+                  <md-button style="text-align: left;max-width:70%;min-width:50%;text-transform:none;">{{video.name}}</md-button>
+                </div>
+                <div layout="row" flex="1" class="md-secondary">
+                  <md-button ng-click="edit(video)" class="md-icon-button">
+                    <md-icon md-svg-icon="../images/pencil.svg" aria-label="Edit"></md-icon>
+                  </md-button>
+                  <md-button ng-click="videoList.$remove(video)" class="md-icon-button">
+                    <md-icon md-svg-icon="../images/bin.svg" aria-label="Edit"></md-icon>
+                  </md-button>
+                </div>
+              </md-list-item>
+            </md-list>
+          </md-card>
+        </md-content>
+      </md-tab>
+    </md-tabs>
+  </md-content>
+</div>

@@ -1,0 +1,61 @@
+<!DOCTYPE html>
+<html lang="en" ng-app="firebaseApp">
+  <head>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="styles/style.css"/>
+    <link rel="stylesheet" href="bower_components/angular-material/angular-material.min.css"/>
+  </head>
+	<body ng-controller="LoginCtrl">
+    <md-content layout="column" >
+      <md-toolbar layout="row">
+        <h3> &nbsp;&nbsp;ICS Live Admin Panel</h1>
+      </md-toolbar><br/><br/><br/>
+      <md-card layout="column" style="margin:auto;min-width:290px;max-widh: 800px;padding: 5px;">
+        <md-input-container>
+          <input placeholder="email" ng-model="user.email"/>
+        </md-input-container>
+        <md-input-container>
+          <input type="password" placeholder="password" ng-model="user.password"/>
+        </md-input-container>
+        <md-card-actions layout="row" layout-align="center">
+          <md-button ng-click="login()" class="md-raised md-accent">Login</md-button>
+        </md-card-actions>
+      </md-card>
+    </md-content>
+
+
+    <script src="bower_components/firebase/firebase.js"></script>
+
+
+    <!-- Google Analytics: change UA-XXXXX-X to be your site's ID -->
+     <script>
+       !function(A,n,g,u,l,a,r){A.GoogleAnalyticsObject=l,A[l]=A[l]||function(){
+       (A[l].q=A[l].q||[]).push(arguments)},A[l].l=+new Date,a=n.createElement(g),
+       r=n.getElementsByTagName(g)[0],a.src=u,r.parentNode.insertBefore(a,r)
+       }(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+
+       ga('create', 'UA-XXXXX-X');
+       ga('send', 'pageview');
+    </script>
+
+
+    <script src="bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="bower_components/angular/angular.min.js"></script>
+    <script src="../bower_components/ngclipboard/ngclipboard.min.js"></script>
+    <script src="bower_components/angular-animate/angular-animate.min.js"></script>
+    <script src="bower_components/angular-aria/angular-aria.min.js"></script>
+    <script src="bower_components/angular-messages/angular-messages.min.js"></script>
+    <script src="bower_components/firebase/firebase.js"></script>
+    <script src="bower_components/firebase-util/dist/firebase-util.min.js"></script>
+    <script src="bower_components/angularfire/dist/angularfire.min.js"></script>
+    <script src="bower_components/angular-material/angular-material.min.js"></script>
+    <script src="bower_components/angular-file-upload/dist/angular-file-upload.min.js"></script>
+
+
+
+
+    <script src="scripts/app.js"></script>
+    <script src="scripts/controllers/login.js"></script>
+	</body>
+</html>

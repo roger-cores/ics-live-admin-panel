@@ -1,0 +1,111 @@
+
+<md-content layout="row">
+  <md-button aria-label="back" style="width: 30px;" ng-click="back()">
+    <md-icon md-svg-icon="../images/back.svg"></md-icon>
+  </md-button>
+  <md-chips ng-model="navigation" name="name" readonly="true" md-max-chips="5">
+    <md-chip-template><strong>{{$chip.name}}</strong><em>&nbsp;({{$chip.selected.name}})</em></md-chip-template>
+  </md-chips>
+</md-content>
+<md-content ng-show="pageOne">
+  <md-content layout-xs="column" layout-gt-xs="row">
+    <div class="md-inline-form">
+      <md-card id="card" layout-padding="layout-padding">
+        <md-sub-header class="md-no-sticky">create or edit {{selectedMasterData}}</md-sub-header>
+        <form ng-show="!tournamentMode" name="masterDataRoundForm" layout-gt-xs="column">
+          <md-input-container flex="flex" style="width:100%;">
+            <label>name</label>
+            <input name="name" ng-model="masterData.name" required="required"/>
+            <div ng-messages="masterDataRoundForm.name.$error" md-auto-hide="false" class="errors">
+              <div ng-message="required">Please enter a name</div>
+            </div>
+          </md-input-container>
+          <md-input-container flex="flex" style="width:100%;">
+            <label>Round Address</label>
+            <input name="roundAddress" ng-model="masterData.roundAddress" required="required"/>
+            <div ng-messages="masterDataRoundForm.roundAddress.$error" md-auto-hide="false" class="errors">
+              <div ng-message="required">Please enter a round address</div>
+            </div>
+          </md-input-container>
+          <div layout="row" layout-align="center center">
+            <md-input-container>
+              <md-button ng-click="update()" ng-disabled="!edittingMode || masterDataRoundForm.$invalid" class="md-raised md-primary">Update</md-button>
+            </md-input-container>
+            <md-input-container>
+              <md-button ng-click="add()" ng-disabled="edittingMode || masterDataRoundForm.$invalid" class="md-raised md-primary">Add</md-button>
+            </md-input-container>
+            <md-input-container>
+              <md-button ng-click="clear()" class="md-raised">Clear</md-button>
+            </md-input-container>
+          </div>
+        </form>
+        <form ng-show="tournamentMode" name="masterDataForm" layout-gt-xs="column">
+          <md-input-container flex="flex" style="width:100%;">
+            <label>name</label>
+            <input name="name" ng-model="masterData.name" required="required"/>
+            <div ng-messages="masterDataForm.name.$error" md-auto-hide="false" class="errors">
+              <div ng-message="required">Please enter a name</div>
+            </div>
+          </md-input-container>
+          <md-datepicker ng-show="tournamentMode" name="startDate" ng-model="masterData.dateStart" md-placeholder="Start Date" required=""></md-datepicker>
+          <div ng-show="tournamentMode" ng-messages="masterDataForm.startDate.$error" class="validation-messages">
+            <div ng-message="required">This date is required!</div>
+          </div>
+          <md-datepicker ng-show="tournamentMode" name="endDate" ng-model="masterData.dateEnd" md-placeholder="Start Date" required=""></md-datepicker>
+          <div ng-show="tournamentMode" ng-messages="masterDataForm.endDate.$error" class="validation-messages">
+            <div ng-message="required">This date is required!</div>
+          </div>
+          <md-input-container ng-show="tournamentMode" flex="flex" style="width:100%;">
+            <label>Tournament Address</label>
+            <input name="tournamentAddress" ng-model="masterData.tournamentAddress" required="required"/>
+            <div ng-messages="masterDataForm.tournamentAddress.$error" md-auto-hide="false" class="errors">
+              <div ng-message="required">Please enter a tournament address</div>
+            </div>
+          </md-input-container>
+          <md-input-container ng-show="tournamentMode" flex="flex" style="width:100%;">
+            <label>Tournament Url</label>
+            <input name="tournamentLocation" ng-model="masterData.base_url" required="required"/>
+            <div ng-messages="masterDataForm.tournamentLocation.$error" md-auto-hide="false" class="errors">
+              <div ng-message="required">Please enter a base url</div>
+            </div>
+          </md-input-container>
+          <div layout="row" layout-align="center center">
+            <md-input-container>
+              <md-button ng-click="update()" ng-disabled="!edittingMode || masterDataForm.$invalid" class="md-raised md-primary">Update</md-button>
+            </md-input-container>
+            <md-input-container>
+              <md-button ng-click="add()" ng-disabled="edittingMode || masterDataForm.$invalid" class="md-raised md-primary">Add</md-button>
+            </md-input-container>
+            <md-input-container>
+              <md-button ng-click="clear()" class="md-raised">Clear</md-button>
+            </md-input-container>
+          </div>
+        </form>
+      </md-card>
+    </div>
+    <md-card layout-padding="layout-padding" flex="flex">
+      <md-list flex="flex">
+        <md-list-item ng-repeat="masterData in masterDataList" class="md-2-line">
+          <md-divider></md-divider>
+          <div flex="3" class="md-list-item-text">
+            <md-button style="text-align: left;max-width:70%;min-width:50%;text-transform:none;" ng-click="open(masterData)">{{masterData.name}}</md-button><span ng-show="tournamentMode">{{parseDate(masterData.dateStart)}} to</span><span ng-show="tournamentMode">  {{parseDate(masterData.dateEnd)}}</span>
+          </div>
+          <div layout="row" flex="1" class="md-secondary">
+            <md-button ng-show="!tournamentMode" ng-click="togglePublish(masterData.$id, !masterData.publish)" class="md-icon-button">
+              <md-icon md-svg-icon="{{masterData.publish ? publishImage : unpublishImage}}" aria-label="Publish"></md-icon>
+            </md-button>
+            <md-button ng-click="edit(masterData)" class="md-icon-button">
+              <md-icon md-svg-icon="../images/pencil.svg" aria-label="Edit"></md-icon>
+            </md-button>
+            <md-button ng-click="remove(masterData)" class="md-icon-button">
+              <md-icon md-svg-icon="../images/bin.svg" aria-label="Edit"></md-icon>
+            </md-button>
+          </div>
+        </md-list-item>
+      </md-list>
+    </md-card>
+  </md-content>
+</md-content>
+<md-content ng-show="!pageOne">
+  <ng-include src="'mcqnote.html'"></ng-include>
+</md-content>

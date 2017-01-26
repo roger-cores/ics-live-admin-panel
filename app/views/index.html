@@ -1,0 +1,518 @@
+<html ng-app="firebaseApp">
+  <head>
+    <script src="../bower_components/jquery/dist/jquery.min.js"></script>
+    <script src="../bower_components/angular/angular.min.js"></script>
+    <script src="../bower_components/ngclipboard/ngclipboard.min.js"></script>
+    <script src="../bower_components/angular-animate/angular-animate.min.js"></script>
+    <script src="../bower_components/angular-aria/angular-aria.min.js"></script>
+    <script src="../bower_components/angular-messages/angular-messages.min.js"></script>
+    <script src="../bower_components/firebase/firebase.js"></script>
+    <script src="../bower_components/firebase-util/dist/firebase-util.min.js"></script>
+    <script src="../bower_components/angularfire/dist/angularfire.min.js"></script>
+    <script src="../bower_components/angular-material/angular-material.min.js"></script>
+    <script src="../bower_components/angular-file-upload/dist/angular-file-upload.min.js"></script>
+    <script src="../scripts/app.js"></script>
+    <script>
+
+
+    'use strict';
+
+    /**
+     * @ngdoc function
+     * @name firebaseApp.controller:MainCtrl
+     * @description
+     * # MainCtrl
+     * Controller of the firebaseApp
+     */
+    angular.module('firebaseApp')
+      .controller('MCQDataCtrl', ['$scope', '$window', '$mdToast', '$firebaseArray', 'firebaseurl', function ($scope, $window, $mdToast, $firebaseArray, firebaseurl) {
+
+        console.log('hi from ctrl');
+        var uri = firebaseurl + '/mcqs';
+        var ref = new Firebase(uri);
+
+
+        var mcqsRef = ref.orderByChild("topic").equalTo("-KFA6e7SezMVRe9y24yb");
+        var mcqs = $firebaseArray(mcqsRef);
+        console.log(mcqs);
+        for(var i=0; i<mcqs.length; i++){
+          console.log(mcqs[i].name);
+
+        }
+
+        var mcqsData = [
+            {
+                "question": "Which of the following conditions favours the existence of a substance in the solid state? ",
+                "ansA": "High temperature ",
+                "ansB": "Low temperature ",
+                "ansC": "High thermal energy",
+                "ansD": "Weak cohesive forces",
+                "ans": "B",
+                "type": "text",
+                "difficulty": 1,
+                "explanation": "-",
+                "explanationType": "text",
+                "name": "Which of the following conditions favours the existence of a substance in the solid state? ",
+                "topic": "-KFA6e7SezMVRe9y24yb"
+            },
+            {
+                "question": "A substance exists as solid only when ",
+                "ansA": "intermolecular forces balance thermal energy",
+                "ansB": "intermolecular forces are stronger than thermal energy",
+                "ansC": "thermal energy dominates over intermolecular forces ",
+                "ansD": "there are oppositely charged ions present. ",
+                "ans": "B",
+                "type": "text",
+                "difficulty": 1,
+                "explanation": "-",
+                "explanationType": "text",
+                "name": "A substance exists as solid only when ",
+                "topic": "-KFA6e7SezMVRe9y24yb"
+            },
+            {
+                "question": "Which one has highest melting point? ",
+                "ansA": "Ionic crystal",
+                "ansB": "Molecular crystal",
+                "ansC": "Covalent crystal ",
+                "ansD": "Metallic crystal",
+                "ans": "C",
+                "type": "text",
+                "difficulty": 1,
+                "explanation": "-",
+                "explanationType": "text",
+                "name": "Which one has highest melting point? ",
+                "topic": "-KFA6e7SezMVRe9y24yb"
+            },
+            {
+                "question": "In graphite, electrons are: ",
+                "ansA": "localised on each carbon atom",
+                "ansB": "spread out between the sheets",
+                "ansC": "localised on every third carbon atom",
+                "ansD": "present in antibonding orbital",
+                "ans": "B",
+                "type": "text",
+                "difficulty": 1,
+                "explanation": "-",
+                "explanationType": "text",
+                "name": "In graphite, electrons are: ",
+                "topic": "-KFA6e7SezMVRe9y24yb"
+            },
+            {
+                "question": "Wax is an example of ",
+                "ansA": "Ionic crystal ",
+                "ansB": "Covalent crystal",
+                "ansC": "Molecular crystal ",
+                "ansD": "Metallic crystal ",
+                "ans": "C",
+                "type": "text",
+                "difficulty": 1,
+                "explanation": "-",
+                "explanationType": "text",
+                "name": "Wax is an example of ",
+                "topic": "-KFA6e7SezMVRe9y24yb"
+            },
+            {
+                "question": "A pseudo solid is : ",
+                "ansA": "glass ",
+                "ansB": "NaCl ",
+                "ansC": "KCl",
+                "ansD": "KCl and NaCI both",
+                "ans": "A",
+                "type": "text",
+                "difficulty": 1,
+                "explanation": "-",
+                "explanationType": "text",
+                "name": "A pseudo solid is : ",
+                "topic": "-KFA6e7SezMVRe9y24yb"
+            },
+            {
+                "question": "Why are solids rigid?",
+                "ansA": "Because of large intermolecular forces ",
+                "ansB": "Because of vibration motion",
+                "ansC": "Because of large intermolecular space",
+                "ansD": "All of the above ",
+                "ans": "A",
+                "type": "text",
+                "difficulty": 1,
+                "explanation": "-",
+                "explanationType": "text",
+                "name": "Why are solids rigid?",
+                "topic": "-KFA6e7SezMVRe9y24yb"
+            },
+            {
+                "question": "Which of the following is not a characteristic of a crystalline solid? ",
+                "ansA": "Definite and characteristic heat of fusion ",
+                "ansB": "Isotropic nature ",
+                "ansC": "A regular periodically repeated pattern of arrangemet of constituent particles in the entire crystal",
+                "ansD": "A true solid ",
+                "ans": "B",
+                "type": "text",
+                "difficulty": 1,
+                "explanation": "-",
+                "explanationType": "text",
+                "name": "Which of the following is not a characteristic of a crystalline solid? ",
+                "topic": "-KFA6e7SezMVRe9y24yb"
+            },
+            {
+                "question": "Which of the following is a network solid?",
+                "ansA": "SO2 (Solid)",
+                "ansB": 12,
+                "ansC": "Diamond ",
+                "ansD": "H2O (Ice) ",
+                "ans": "C",
+                "type": "text",
+                "difficulty": 1,
+                "explanation": "-",
+                "explanationType": "text",
+                "name": "Which of the following is a network solid?",
+                "topic": "-KFA6e7SezMVRe9y24yb"
+            },
+            {
+                "question": "The constituent particles of a solid have",
+                "ansA": "translatory motion only ",
+                "ansB": "rotatory motion only ",
+                "ansC": "vibratory motion only",
+                "ansD": "all the above types of motion.",
+                "ans": "C",
+                "type": "text",
+                "difficulty": 1,
+                "explanation": "-",
+                "explanationType": "text",
+                "name": "The constituent particles of a solid have",
+                "topic": "-KFA6e7SezMVRe9y24yb"
+            },
+            {
+                "question": "Which one of the following will have a low heat of fusion?",
+                "ansA": "a covalent solid",
+                "ansB": "an ionic solid ",
+                "ansC": "a metallic solid ",
+                "ansD": "a molecular solid ",
+                "ans": "D",
+                "type": "text",
+                "difficulty": 1,
+                "explanation": "-",
+                "explanationType": "text",
+                "name": "Which one of the following will have a low heat of fusion?",
+                "topic": "-KFA6e7SezMVRe9y24yb"
+            },
+            {
+                "question": "Which among the following will show anisotropy?",
+                "ansA": "Glass ",
+                "ansB": "Barium chloride ",
+                "ansC": "Wood ",
+                "ansD": "Paper ",
+                "ans": "B",
+                "type": "text",
+                "difficulty": 1,
+                "explanation": "-",
+                "explanationType": "text",
+                "name": "Which among the following will show anisotropy?",
+                "topic": "-KFA6e7SezMVRe9y24yb"
+            },
+            {
+                "question": "Which of the following is an amorphous solid?",
+                "ansA": "Graphite (C) ",
+                "ansB": "Quartz glass (SiO2)",
+                "ansC": "Chrome alum ",
+                "ansD": "Silicon carbide (SiC)",
+                "ans": "B",
+                "type": "text",
+                "difficulty": 1,
+                "explanation": "-",
+                "explanationType": "text",
+                "name": "Which of the following is an amorphous solid?",
+                "topic": "-KFA6e7SezMVRe9y24yb"
+            },
+            {
+                "question": "Which of the following is not a crystalline solid?",
+                "ansA": "KCI ",
+                "ansB": "CsCl ",
+                "ansC": "Glass ",
+                "ansD": "Rhombic S ",
+                "ans": "cv",
+                "type": "text",
+                "difficulty": 1,
+                "explanation": "-",
+                "explanationType": "text",
+                "name": "Which of the following is not a crystalline solid?",
+                "topic": "-KFA6e7SezMVRe9y24yb"
+            },
+            {
+                "question": "An example of a covalent crystalline solid is",
+                "ansA": "Si ",
+                "ansB": "NaF ",
+                "ansC": "Ar ",
+                "ansD": "Al ",
+                "ans": "A",
+                "type": "text",
+                "difficulty": 1,
+                "explanation": "-",
+                "explanationType": "text",
+                "name": "An example of a covalent crystalline solid is",
+                "topic": "-KFA6e7SezMVRe9y24yb"
+            },
+            {
+                "question": "Amorphous substances show (A) Short and long range order (B) Short range order (C) Long range order (D) have no sharp m.p.",
+                "ansA": "A and C are correct ",
+                "ansB": "B and C are correct ",
+                "ansC": "C and D are correct ",
+                "ansD": "B and D are correct. ",
+                "ans": "D",
+                "type": "text",
+                "difficulty": 1,
+                "explanation": "-",
+                "explanationType": "text",
+                "name": "Amorphous substances show (A) Short and long range order (B) Short range order (C) Long range order (D) have no sharp m.p.",
+                "topic": "-KFA6e7SezMVRe9y24yb"
+            },
+            {
+                "question": "Which of the following ststement is not true about amorphous solids? ",
+                "ansA": "On heating they may become crystalline at ",
+                "ansB": "They may become crystalline on keeping for ",
+                "ansC": "Amorphous solids can be moulded by heating",
+                "ansD": "They are anisotropic in nature ",
+                "ans": "D",
+                "type": "text",
+                "difficulty": 1,
+                "explanation": "-",
+                "explanationType": "text",
+                "name": "Which of the following ststement is not true about amorphous solids? ",
+                "topic": "-KFA6e7SezMVRe9y24yb"
+            },
+            {
+                "question": "Solid CO2 is an example of ",
+                "ansA": "Ionic crystal ",
+                "ansB": "Covalent crystal ",
+                "ansC": "Metallic crystal ",
+                "ansD": "Molecular crystal ",
+                "ans": "D",
+                "type": "text",
+                "difficulty": 1,
+                "explanation": "-",
+                "explanationType": "text",
+                "name": "Solid CO2 is an example of ",
+                "topic": "-KFA6e7SezMVRe9y24yb"
+            },
+            {
+                "question": "Which among the following will not show anisotropy?",
+                "ansA": "BaCl2 ",
+                "ansB": "NaCI ",
+                "ansC": "Glass ",
+                "ansD": "KN03 ",
+                "ans": "C",
+                "type": "text",
+                "difficulty": 1,
+                "explanation": "-",
+                "explanationType": "text",
+                "name": "Which among the following will not show anisotropy?",
+                "topic": "-KFA6e7SezMVRe9y24yb"
+            },
+            {
+                "question": "Iodine crystals are: ",
+                "ansA": "Metallic ",
+                "ansB": "Ionic ",
+                "ansC": "Molecular ",
+                "ansD": "Covalent ",
+                "ans": "C",
+                "type": "text",
+                "difficulty": 1,
+                "explanation": "-",
+                "explanationType": "text",
+                "name": "Iodine crystals are: ",
+                "topic": "-KFA6e7SezMVRe9y24yb"
+            },
+            {
+                "question": "An example of a substance possessing gaint covalent structure is: ",
+                "ansA": "Iodine crystal",
+                "ansB": "Silica ",
+                "ansC": "Solid carbon dioxide",
+                "ansD": "White phosphorus ",
+                "ans": "B",
+                "type": "text",
+                "difficulty": 1,
+                "explanation": "-",
+                "explanationType": "text",
+                "name": "An example of a substance possessing gaint covalent structure is: ",
+                "topic": "-KFA6e7SezMVRe9y24yb"
+            },
+            {
+                "question": "Which type of solid crystals will conduct heat and electricity ? ",
+                "ansA": "Ionic ",
+                "ansB": "Covalent ",
+                "ansC": "Molecular ",
+                "ansD": "Metallic ",
+                "ans": "D",
+                "type": "text",
+                "difficulty": 1,
+                "explanation": "-",
+                "explanationType": "text",
+                "name": "Which type of solid crystals will conduct heat and electricity ? ",
+                "topic": "-KFA6e7SezMVRe9y24yb"
+            },
+            {
+                "question": "Most crystals show good cleavage because their atoms, ions or molecules are",
+                "ansA": "weakly bonded together ",
+                "ansB": "strongly bonded together ",
+                "ansC": "spherically symmetrical ",
+                "ansD": "arranged in planes. ",
+                "ans": "D",
+                "type": "text",
+                "difficulty": 1,
+                "explanation": "-",
+                "explanationType": "text",
+                "name": "Most crystals show good cleavage because their atoms, ions or molecules are",
+                "topic": "-KFA6e7SezMVRe9y24yb"
+            },
+            {
+                "question": "TeO2 is an example of ",
+                "ansA": "Monoclinic system",
+                "ansB": "Tetragonal system",
+                "ansC": "Rhombic system ",
+                "ansD": "Triclinic system ",
+                "ans": "B",
+                "type": "text",
+                "difficulty": 1,
+                "explanation": "-",
+                "explanationType": "text",
+                "name": "TeO2 is an example of ",
+                "topic": "-KFA6e7SezMVRe9y24yb"
+            },
+            {
+                "question": "Which of the following is a molecular crystal? ",
+                "ansA": "SiC ",
+                "ansB": "NaCl ",
+                "ansC": "Graphite ",
+                "ansD": "Ice ",
+                "ans": "D",
+                "type": "text",
+                "difficulty": 1,
+                "explanation": "-",
+                "explanationType": "text",
+                "name": "Which of the following is a molecular crystal? ",
+                "topic": "-KFA6e7SezMVRe9y24yb"
+            },
+            {
+                "question": "Which of the following is not the characteristic of ionic solids? ",
+                "ansA": "Very low value of electrical conductivity in the molten state ",
+                "ansB": "Brittle nature ",
+                "ansC": "Very strong forces of interactions ",
+                "ansD": "Anisotropic nature ",
+                "ans": "A",
+                "type": "text",
+                "difficulty": 1,
+                "explanation": "-",
+                "explanationType": "text",
+                "name": "Which of the following is not the characteristic of ionic solids? ",
+                "topic": "-KFA6e7SezMVRe9y24yb"
+            },
+            {
+                "question": "Among the following which crystal will be soft and have low melting point? ",
+                "ansA": "Covalent ",
+                "ansB": "Ionic ",
+                "ansC": "Metallic ",
+                "ansD": "Molecular ",
+                "ans": "D",
+                "type": "text",
+                "difficulty": 1,
+                "explanation": "-",
+                "explanationType": "text",
+                "name": "Among the following which crystal will be soft and have low melting point? ",
+                "topic": "-KFA6e7SezMVRe9y24yb"
+            },
+            {
+                "question": "Graphite is a good conductor of electricity due to the presence of",
+                "ansA": "lone pair of electrons",
+                "ansB": "free valence electrons ",
+                "ansC": "cations ",
+                "ansD": "anions ",
+                "ans": "B",
+                "type": "text",
+                "difficulty": 1,
+                "explanation": "-",
+                "explanationType": "text",
+                "name": "Graphite is a good conductor of electricity due to the presence of",
+                "topic": "-KFA6e7SezMVRe9y24yb"
+            },
+            {
+                "question": "Calcite belongs to",
+                "ansA": "Tetragonal system",
+                "ansB": "Trigonal system ",
+                "ansC": "Digonal system",
+                "ansD": "Hexagonal system",
+                "ans": "B",
+                "type": "text",
+                "difficulty": 1,
+                "explanation": "-",
+                "explanationType": "text",
+                "name": "Calcite belongs to",
+                "topic": "-KFA6e7SezMVRe9y24yb"
+            },
+            {
+                "question": "The number of atoms per unit cell is 2, the arrangement is",
+                "ansA": "octahedral ",
+                "ansB": "fcc ",
+                "ansC": "bee ",
+                "ansD": "none of these ",
+                "ans": "C",
+                "type": "text",
+                "difficulty": 1,
+                "explanation": "-",
+                "explanationType": "text",
+                "name": "The number of atoms per unit cell is 2, the arrangement is",
+                "topic": "-KFA6e7SezMVRe9y24yb"
+            },
+            {
+                "question": "The most unsymmetrical crystal system is",
+                "ansA": "Cubic ",
+                "ansB": "Hexagonal ",
+                "ansC": "Triclinic ",
+                "ansD": "Orthorhombic",
+                "ans": "C",
+                "type": "text",
+                "difficulty": 1,
+                "explanation": "-",
+                "explanationType": "text",
+                "name": "The most unsymmetrical crystal system is",
+                "topic": "-KFA6e7SezMVRe9y24yb"
+            },
+            {
+                "question": "The edge atom of a cube provides how many atoms to the unit cell ? ",
+                "ansA": "1 /2",
+                "ansB": "1 /4",
+                "ansC": "1 /8",
+                "ansD": 1,
+                "ans": "D",
+                "type": "text",
+                "difficulty": 1,
+                "explanation": "-",
+                "explanationType": "text",
+                "name": "The edge atom of a cube provides how many atoms to the unit cell ? ",
+                "topic": "-KFA6e7SezMVRe9y24yb"
+            }
+        ];
+
+        for(var i=0; i<mcqsData.length; i++){
+          ref.push(mcqsData[i]);
+
+        }
+
+
+
+
+
+
+      }]);
+
+
+
+
+
+
+
+    </script>
+  </head>
+
+  <body ng-controller="MCQDataCtrl">
+
+  </body>
+</html>

@@ -1,0 +1,12 @@
+.blocked {
+  opacity: 1;
+}
+
+.unblocked {
+  opacity: 0.1;
+}
+
+
+.hidden {
+  display: none;
+}

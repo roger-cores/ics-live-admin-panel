@@ -1,0 +1,85 @@
+md-content(layout='row')
+  md-button(aria-label='back', style='width: 30px;', ng-click='back()')
+    md-icon(md-svg-icon = '../images/back.svg')
+  md-chips(ng-model='navigation', name='name', readonly='true', md-max-chips='5')
+    md-chip-template
+      strong {{$chip.name}}
+      em &nbsp;({{$chip.selected.name}})
+md-content(ng-show='pageOne')
+  md-content(layout-xs='column', layout-gt-xs='row')
+    div.md-inline-form
+      md-card#card(layout-padding)
+        md-sub-header.md-no-sticky create or edit {{selectedMasterData}}
+        form(ng-show='!tournamentMode',name='masterDataRoundForm', layout-gt-xs='column')
+          md-input-container(flex, style='width:100%;')
+            label name
+            input(name = 'name', ng-model='masterData.name', required)
+            div.errors(ng-messages="masterDataRoundForm.name.$error", md-auto-hide='false')
+              div(ng-message='required') Please enter a name
+          md-input-container(flex, style='width:100%;')
+            label Round Address
+            input(name = 'roundAddress', ng-model='masterData.roundAddress', required)
+            div.errors(ng-messages="masterDataRoundForm.roundAddress.$error", md-auto-hide='false')
+              div(ng-message='required') Please enter a round address
+          div(layout='row', layout-align='center center')
+            md-input-container
+              md-button.md-raised.md-primary(ng-click='update()', ng-disabled='!edittingMode || masterDataRoundForm.$invalid') Update
+            md-input-container
+              md-button.md-raised.md-primary(ng-click='add()', ng-disabled='edittingMode || masterDataRoundForm.$invalid') Add
+            md-input-container
+              md-button.md-raised(ng-click='clear()') Clear
+        form(ng-show='tournamentMode',name='masterDataForm', layout-gt-xs='column')
+          md-input-container(flex, style='width:100%;')
+            label name
+            input(name = 'name', ng-model='masterData.name', required)
+            div.errors(ng-messages="masterDataForm.name.$error", md-auto-hide='false')
+              div(ng-message='required') Please enter a name
+          md-datepicker(ng-show='tournamentMode',name='startDate', ng-model='masterData.dateStart', md-placeholder='Start Date', required='')
+
+          .validation-messages(ng-show='tournamentMode',ng-messages='masterDataForm.startDate.$error')
+            div(ng-message='required') This date is required!
+
+          md-datepicker(ng-show='tournamentMode',name='endDate', ng-model='masterData.dateEnd', md-placeholder='Start Date', required='')
+
+          .validation-messages(ng-show='tournamentMode',ng-messages='masterDataForm.endDate.$error')
+            div(ng-message='required') This date is required!
+
+
+          md-input-container(ng-show='tournamentMode',flex, style='width:100%;')
+            label Tournament Address
+            input(name = 'tournamentAddress', ng-model='masterData.tournamentAddress', required)
+            div.errors(ng-messages="masterDataForm.tournamentAddress.$error", md-auto-hide='false')
+              div(ng-message='required') Please enter a tournament address
+
+          md-input-container(ng-show='tournamentMode',flex, style='width:100%;')
+            label Tournament Url
+            input(name = 'tournamentLocation', ng-model='masterData.base_url', required)
+            div.errors(ng-messages="masterDataForm.tournamentLocation.$error", md-auto-hide='false')
+              div(ng-message='required') Please enter a base url
+
+
+          div(layout='row', layout-align='center center')
+            md-input-container
+              md-button.md-raised.md-primary(ng-click='update()', ng-disabled='!edittingMode || masterDataForm.$invalid') Update
+            md-input-container
+              md-button.md-raised.md-primary(ng-click='add()', ng-disabled='edittingMode || masterDataForm.$invalid') Add
+            md-input-container
+              md-button.md-raised(ng-click='clear()') Clear
+
+    md-card(layout-padding, flex)
+      md-list(flex)
+        md-list-item.md-2-line(ng-repeat='masterData in masterDataList')
+          md-divider
+          div.md-list-item-text(flex = '3')
+            md-button(style='text-align: left;max-width:70%;min-width:50%;text-transform:none;', ng-click='open(masterData)') {{masterData.name}}
+            span(ng-show='tournamentMode') {{parseDate(masterData.dateStart)}} to
+            span(ng-show='tournamentMode')   {{parseDate(masterData.dateEnd)}}
+          div.md-secondary(layout='row', flex = '1')
+            md-button.md-icon-button(ng-show='!tournamentMode', ng-click='togglePublish(masterData.$id, !masterData.publish)')
+              md-icon(md-svg-icon='{{masterData.publish ? publishImage : unpublishImage}}', aria-label='Publish')
+            md-button.md-icon-button(ng-click='edit(masterData)')
+              md-icon(md-svg-icon='../images/pencil.svg', aria-label='Edit')
+            md-button.md-icon-button(ng-click='remove(masterData)')
+              md-icon(md-svg-icon='../images/bin.svg', aria-label='Edit')
+md-content(ng-show='!pageOne')
+  ng-include(src="'mcqnote.html'")

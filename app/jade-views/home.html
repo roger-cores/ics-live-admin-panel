@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html ng-app="firebaseApp">
+  <head>
+    <title>Home | Admin Panel</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="../styles/style.css">
+    <link rel="stylesheet" href="../bower_components/angular-material/angular-material.min.css">
+    <body>
+      <md-content layout="column">
+        <md-toolbar layout="row" ng-controller="HomeCtrl">
+          <div class="md-toolbar-tools top-navbar">
+            <h2><span>ICS Live Admin Panel</span></h2><span flex=""></span>
+            <md-button aria-label="Log out" ng-click="logOut()" class="md-raised">Log out</md-button>
+          </div>
+        </md-toolbar>
+        <div ng-cloak="">
+          <md-content>
+            <md-tabs md-dynamic-height="" md-border-bottom="">
+              <md-tab label="Master Data">
+                <md-content ng-controller="MasterDataCtrl" layout="column" class="md-padding">
+                  <ng-include src="page"></ng-include>
+                </md-content>
+              </md-tab>
+            </md-tabs>
+          </md-content>
+        </div>
+      </md-content>
+      <script src="../bower_components/firebase/firebase.js"></script>
+      <script src="../bower_components/jquery/dist/jquery.min.js"></script>
+      <script src="../bower_components/angular/angular.min.js"></script>
+      <script src="../bower_components/ngclipboard/ngclipboard.min.js"></script>
+      <script src="../bower_components/angular-aria/angular-aria.min.js"></script>
+      <script src="../bower_components/angular-animate/angular-animate.min.js"></script>
+      <script src="../bower_components/angular-messages/angular-messages.min.js"></script>
+      <script src="../bower_components/firebase-util/dist/firebase-util.min.js"></script>
+      <script src="../bower_components/angularfire/dist/angularfire.min.js"></script>
+      <script src="../bower_components/angular-material/angular-material.min.js"></script>
+      <script src="../bower_components/angular-file-upload/dist/angular-file-upload.min.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.17.1/moment.min.js"></script>
+      <script src="../scripts/app.js"></script>
+      <script src="../scripts/controllers/home.js"></script>
+      <script src="../scripts/controllers/masterdata.js"></script>
+      <script src="../scripts/controllers/users.js"></script>
+      <script src="../scripts/controllers/mcq.js"></script>
+      <script src="../scripts/controllers/note.js"></script>
+      <script src="../scripts/controllers/video.js"></script>
+      <script src="../scripts/controllers/wait.js"></script>
+    </body>
+  </head>
+</html>

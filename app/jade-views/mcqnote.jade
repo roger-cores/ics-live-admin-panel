@@ -1,0 +1,236 @@
+div(ng-cloak='')
+  md-content
+    md-tabs(md-dynamic-height='', md-border-bottom='')
+      md-tab(label='MCQs')
+        md-content.md-padding(layout-xs='column', layout-gt-xs='row', ng-controller = 'MCQCtrl')
+          div.md-inline-form
+            md-card#card(layout-padding)
+              md-sub-header.md-no-sticky create or edit MCQs
+              form(name='mcqForm', layout-gt-xs='column')
+                md-input-container
+                  label name
+                  input(name='name', required, ng-model = 'mcq.name')
+                  div.errors(ng-messages="mcqForm.name.$error", md-auto-hide='false')
+                    div(ng-message='required') Please enter a name
+                md-radio-group(ng-model='mcq.type')
+                  md-radio-button.md-raised.md-primary(value='image') Images&nbsp;&nbsp;&nbsp;
+                  md-radio-button.md-raised.md-primary(value='text') Text&nbsp;&nbsp;&nbsp;
+              br
+              &nbsp;
+              br
+              div(ng-show='isImageType()')
+                div(flex, style='width:100%;')
+                  label(for='quest') Question
+                  input(id='quest', required, type='file', nv-file-select="", uploader="uploader", ng-file-select="{id: 'quest'}", custom-on-change="uploadFileQuest")
+                br
+                &nbsp;
+                img(ng-src="{{'/extraclass2/uploads/'+mcq.question}}", ng-show="mcq.question!=null", style='width:100px;height:100px')
+                br
+                div(flex, style='width:100%;')
+                  label(for='ansA') Answer A
+                  input(id='ansA', ng-model='mcq.ansA', required, type='file', accept='image/*', nv-file-select="", uploader="uploader", custom-on-change="uploadFileA")
+                br
+                img(ng-src="{{'/extraclass2/uploads/'+mcq.ansA}}", ng-show="mcq.ansA!=null", style='width:100px;height:100px')
+                br
+                div(flex, style='width:100%;')
+                  label(for='ansB') Answer B
+                  input(id='ansB', ng-model='mcq.ansB', required, type='file', accept='image/*', nv-file-select="", uploader="uploader", custom-on-change="uploadFileB")
+                br
+                img(ng-src="{{'/extraclass2/uploads/'+mcq.ansB}}", ng-show="mcq.ansB!=null", style='width:100px;height:100px')
+                br
+                div(flex, style='width:100%;')
+                  label(for='ansC') Answer C:
+                  input(id='ansC', ng-model='mcq.ansC', required, type='file', accept='image/*', nv-file-select="", uploader="uploader", custom-on-change="uploadFileC")
+                br
+                img(ng-src="{{'/extraclass2/uploads/'+mcq.ansC}}", ng-show="mcq.ansC!=null", style='width:100px;height:100px')
+                br
+                div(flex, style='width:100%;')
+                  label(for='ansD') Answer D:
+                  input(id='ansD', ng-model='mcq.ansD', required, type='file', accept='image/*', nv-file-select="", uploader="uploader", custom-on-change="uploadFileD")
+                img(ng-src="{{'/extraclass2/uploads/'+mcq.ansD}}", ng-show="mcq.ansD!=null", style='width:100px;height:100px')
+                br
+              form(name='mcqTextual', ng-show='!isImageType()')
+                md-input-container(flex, style='width:100%;')
+                  label(for='quest') Question
+                  input(name='question', id='quest', ng-model='mcq.question', required)
+                  div.errors(ng-messages="mcqTextual.question.$error", md-auto-hide='false')
+                    div(ng-message='required') Please enter a question
+                br
+                &nbsp;
+                br
+                md-input-container(flex, style='width:100%;')
+                  label(for='ansA') Answer A
+                  input(name = 'ansA', id='ansA', ng-model='mcq.ansA', required)
+                  div.errors(ng-messages="mcqTextual.ansA.$error", md-auto-hide='false')
+                    div(ng-message='required') Please enter option A
+                br
+                md-input-container(flex, style='width:100%;')
+                  label(for='ansB') Answer B
+                  input(name = 'ansB', id='ansB', ng-model='mcq.ansB', required)
+                  div.errors(ng-messages="mcqTextual.ansB.$error", md-auto-hide='false')
+                    div(ng-message='required') Please enter option B
+                br
+                md-input-container(flex, style='width:100%;')
+                  label(for='ansC') Answer C:
+                  input(name='ansC', id='ansC', ng-model='mcq.ansC', required)
+                  div.errors(ng-messages="mcqTextual.ansC.$error", md-auto-hide='false')
+                    div(ng-message='required') Please enter option C
+                br
+                md-input-container(flex, style='width:100%;')
+                  label(for='ansD') Answer D:
+                  input(name='ansD', id='ansD', ng-model='mcq.ansD', required)
+                  div.errors(ng-messages="mcqTextual.ansD.$error", md-auto-hide='false')
+                    div(ng-message='required') Please enter option D
+              md-input-container
+                label Answer:
+                br
+                &nbsp;
+                br
+                md-radio-group(ng-model='mcq.ans')
+                  md-radio-button.md-primary(aria-label='A', value='A') A&nbsp;&nbsp;&nbsp;
+                  md-radio-button.md-primary(aria-label='B', value='B') B&nbsp;&nbsp;&nbsp;
+                  md-radio-button.md-primary(aria-label='C', value='C') C&nbsp;&nbsp;&nbsp;
+                  md-radio-button.md-primary(aria-label='D', value='D') D
+              br
+              md-input-container
+                label Explanation:
+                br
+                &nbsp;
+                br
+                md-radio-group(ng-model='mcq.explanationType')
+                  md-radio-button.md-raised.md-primary(value='image') Image&nbsp;&nbsp;&nbsp;
+                  md-radio-button.md-raised.md-primary(value='text') Text&nbsp;&nbsp;&nbsp;
+              form(name='explanation')
+                md-input-container(ng-show='!isExplanationImageType()', style='width:100%;')
+                  label Explanation:
+                  input(name='text', ng-model='mcq.explanation', required)
+                  div.errors(ng-messages="explanation.text.$error", md-auto-hide='false')
+                    div(ng-message='required') Please enter the explanation
+                br
+                div(flex, style='width:100%;', ng-show='isExplanationImageType()')
+                  label(for='expImage') Answer D:
+                  input(id='expImage', required, ng-model='mcq.explanation', type='file', accept='image/*', nv-file-select="", uploader="uploader", custom-on-change="uploadFileExplanation")
+                img(ng-src="{{'/extraclass2/uploads/'+mcq.explanation}}", ng-show="mcq.explanation!=null && isExplanationImageType()", style='width:100px;height:100px')
+                br
+              md-input-container
+                label Difficulty:
+                br
+                &nbsp;
+                br
+                md-radio-group(ng-model='mcq.difficulty', required)
+                  md-radio-button.md-primary(aria-label='1', value='1') 1&nbsp;&nbsp;&nbsp;
+                  md-radio-button.md-primary(aria-label='2', value='2') 2&nbsp;&nbsp;&nbsp;
+                  md-radio-button.md-primary(aria-label='3', value='3') 3&nbsp;&nbsp;&nbsp;
+              br
+
+
+
+              div(layout='row', layout-align='center center')
+                md-input-container
+                  md-button.md-raised.md-primary(ng-click='update()', ng-disabled='!edittingMode || mcqForm.$invalid || (!isImageType() && mcqTextual.$invalid) || (!isExplanationImageType() && explanation.$invalid) ') Update
+                md-input-container
+                  md-button.md-raised.md-primary(ng-click='add()', ng-disabled='edittingMode || mcqForm.$invalid || (!isImageType() && mcqTextual.$invalid) || (!isExplanationImageType() && explanation.$invalid) || validateFiles() ') Add
+                md-input-container
+                  md-button.md-raised(ng-click='clear()') Clear
+
+          md-card(layout-padding, flex)
+            md-list(flex)
+              md-list-item.md-2-line(ng-repeat='mcq in mcqList')
+                md-divider
+                div.md-list-item-text(flex = '3')
+                  md-button(style='text-align: left;max-width:70%;min-width:50%;text-transform:none;') {{mcq.name}}
+
+                div.md-secondary(layout='row', flex = '1')
+                  md-button.md-icon-button(ng-click='edit(mcq)')
+                    md-icon(md-svg-icon='../images/pencil.svg', aria-label='Edit')
+                  md-button.md-icon-button(ng-click='mcqList.$remove(mcq)')
+                    md-icon(md-svg-icon='../images/bin.svg', aria-label='Edit')
+
+
+
+
+      md-tab(label='Notes')
+        md-content.md-padding(layout-xs='column', layout-gt-xs='row', ng-controller = 'NotesCTRL')
+          div.md-inline-form
+            md-card#card(layout-padding)
+              md-sub-header.md-no-sticky create or edit MCQs
+              form(name = 'noteForm', layout-gt-xs='column')
+                md-input-container
+                  label name
+                  input(name='name', required, ng-model = 'note.name')
+                  div.errors(ng-messages="noteForm.name.$error", md-auto-hide='false')
+                    div(ng-message='required') Please enter a name
+
+
+              div(flex, style='width:100%;')
+                label(for='note') Note
+                br
+                input(id='note', required, type='file', multiple, accept='' nv-file-select="", uploader="uploader", ng-file-select="{id: 'quest'}")
+              br
+              &nbsp;
+
+
+
+
+              div(layout='row', layout-align='center center')
+                md-input-container
+                  md-button.md-raised.md-primary(ng-click='update()', ng-disabled='!edittingMode || noteForm.$invalid || validateFiles()') Update
+                md-input-container
+                  md-button.md-raised.md-primary(ng-click='add()', ng-disabled='edittingMode || noteForm.$invalid || validateFiles()') Add
+                md-input-container
+                  md-button.md-raised(ng-click='clear()') Clear
+
+          md-card(layout-padding, flex)
+            md-list(flex)
+              md-list-item.md-2-line(ng-repeat='note in noteList')
+                md-divider
+                div.md-list-item-text(flex = '3')
+                  md-button(style='text-align: left;max-width:70%;min-width:50%;text-transform:none;') {{note.name}}
+                div.md-secondary(layout='row', flex = '1')
+                  md-button.md-icon-button(ng-click='edit(note)')
+                    md-icon(md-svg-icon='../images/pencil.svg', aria-label='Edit')
+                  md-button.md-icon-button(ng-click='noteList.$remove(note)')
+                    md-icon(md-svg-icon='../images/bin.svg', aria-label='Edit')
+
+      md-tab(label='Videos')
+        md-content.md-padding(layout-xs='column', layout-gt-xs='row', ng-controller = 'VideosCTRL')
+          div.md-inline-form
+            md-card#card(layout-padding)
+              md-sub-header.md-no-sticky create or edit Video
+              form(name = 'videoForm', layout-gt-xs='column')
+                md-input-container
+                  label name
+                  input(name='name', required, ng-model = 'video.name')
+                  div.errors(ng-messages="videoForm.name.$error", md-auto-hide='false')
+                    div(ng-message='required') Please enter a name
+
+
+              div(flex, style='width:100%;')
+                label(for='video') Note
+                br
+                input(id='video', required, type='file', multiple = 'false', accept='' nv-file-select="", uploader="uploader", ng-file-select="{id: 'quest'}")
+              br
+              &nbsp;
+
+
+
+
+              div(layout='row', layout-align='center center')
+                md-input-container
+                  md-button.md-raised.md-primary(ng-click='update()', ng-disabled='!edittingMode || videoForm.$invalid || validateFiles()') Update
+                md-input-container
+                  md-button.md-raised.md-primary(ng-click='add()', ng-disabled='edittingMode || videoForm.$invalid || validateFiles()') Add
+                md-input-container
+                  md-button.md-raised(ng-click='clear()') Clear
+
+          md-card(layout-padding, flex)
+            md-list(flex)
+              md-list-item.md-2-line(ng-repeat='video in videoList')
+                md-divider
+                div.md-list-item-text(flex = '3')
+                  md-button(style='text-align: left;max-width:70%;min-width:50%;text-transform:none;') {{video.name}}
+                div.md-secondary(layout='row', flex = '1')
+                  md-button.md-icon-button(ng-click='edit(video)')
+                    md-icon(md-svg-icon='../images/pencil.svg', aria-label='Edit')
+                  md-button.md-icon-button(ng-click='videoList.$remove(video)')
+                    md-icon(md-svg-icon='../images/bin.svg', aria-label='Edit')

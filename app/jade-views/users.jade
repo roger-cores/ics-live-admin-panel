@@ -1,0 +1,39 @@
+md-content(layout-xs='column', layout-gt-xs='row')
+  div.md-inline-form
+    md-card#card(layout-padding)
+      md-sub-header.md-no-sticky create or edit an user
+      form(name='userForm', layout-gt-xs='column')
+        md-input-container(flex, style='width:100%;')
+          label enter the email
+          input(name='email', ng-model='user.email', required, ng-pattern="/^.+@.+\..+$/")
+          div.errors(ng-messages="userForm.email.$error", md-auto-hide='false')
+            div(ng-message-exp="['required', 'pattern']") Please enter a valid email
+        md-input-container(flex, style='width:100%;')
+          label choose a password
+          input(name='pass', ng-model='user.password', required)
+          div.errors(ng-messages="userForm.pass.$error", md-auto-hide='false')
+            div(ng-message='required') Please enter a password
+        div(layout='row', layout-align='center center')
+          md-input-container
+            md-button.md-raised.md-primary(ng-click='add()', ng-disabled='userForm.$invalid') Add
+          md-input-container
+            md-button.md-raised(ng-click='clear()') Clear
+
+  md-card(layout-padding, flex)
+    md-list(flex)
+      md-sub-header.md-no-sticky Users
+      md-list-item.md-2-line(ng-repeat='user in users')
+        md-divider
+        div.md-list-item-text(flex = '3')
+          h4 {{user.email}}
+          br
+          h5 {{user.pkey}}
+        div.md-secondary(layout='row', flex = '1')
+          md-input-container
+            md-button.md-raised(ng-click='seeKey(user)') See Key
+          md-input-container
+            md-button.md-raised(ng-click='mailKey(user)') Mail Key
+          md-button.md-icon-button(ng-click='block(user.$id, !user.blocked)')
+            md-icon(md-svg-icon='../images/shapes.svg', aria-label='Edit', ng-class='user.blocked ? blocked : unblocked')
+          md-button.md-icon-button(ng-click='refreshKey(user)')
+            md-icon(md-svg-icon='../images/refresh.svg', aria-label='Edit', ng-class='user.keyUsed ? unblocked : blocked')

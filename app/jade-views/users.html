@@ -1,0 +1,58 @@
+
+<md-content layout-xs="column" layout-gt-xs="row">
+  <div class="md-inline-form">
+    <md-card id="card" layout-padding="layout-padding">
+      <md-sub-header class="md-no-sticky">create or edit an user</md-sub-header>
+      <form name="userForm" layout-gt-xs="column">
+        <md-input-container flex="flex" style="width:100%;">
+          <label>enter the email</label>
+          <input name="email" ng-model="user.email" required="required" ng-pattern="/^.+@.+..+$/"/>
+          <div ng-messages="userForm.email.$error" md-auto-hide="false" class="errors">
+            <div ng-message-exp="['required', 'pattern']">Please enter a valid email</div>
+          </div>
+        </md-input-container>
+        <md-input-container flex="flex" style="width:100%;">
+          <label>choose a password</label>
+          <input name="pass" ng-model="user.password" required="required"/>
+          <div ng-messages="userForm.pass.$error" md-auto-hide="false" class="errors">
+            <div ng-message="required">Please enter a password</div>
+          </div>
+        </md-input-container>
+        <div layout="row" layout-align="center center">
+          <md-input-container>
+            <md-button ng-click="add()" ng-disabled="userForm.$invalid" class="md-raised md-primary">Add</md-button>
+          </md-input-container>
+          <md-input-container>
+            <md-button ng-click="clear()" class="md-raised">Clear</md-button>
+          </md-input-container>
+        </div>
+      </form>
+    </md-card>
+  </div>
+  <md-card layout-padding="layout-padding" flex="flex">
+    <md-list flex="flex">
+      <md-sub-header class="md-no-sticky">Users</md-sub-header>
+      <md-list-item ng-repeat="user in users" class="md-2-line">
+        <md-divider></md-divider>
+        <div flex="3" class="md-list-item-text">
+          <h4>{{user.email}}</h4><br/>
+          <h5>{{user.pkey}}</h5>
+        </div>
+        <div layout="row" flex="1" class="md-secondary">
+          <md-input-container>
+            <md-button ng-click="seeKey(user)" class="md-raised">See Key</md-button>
+          </md-input-container>
+          <md-input-container>
+            <md-button ng-click="mailKey(user)" class="md-raised">Mail Key</md-button>
+          </md-input-container>
+          <md-button ng-click="block(user.$id, !user.blocked)" class="md-icon-button">
+            <md-icon md-svg-icon="../images/shapes.svg" aria-label="Edit" ng-class="user.blocked ? blocked : unblocked"></md-icon>
+          </md-button>
+          <md-button ng-click="refreshKey(user)" class="md-icon-button">
+            <md-icon md-svg-icon="../images/refresh.svg" aria-label="Edit" ng-class="user.keyUsed ? unblocked : blocked"></md-icon>
+          </md-button>
+        </div>
+      </md-list-item>
+    </md-list>
+  </md-card>
+</md-content>
