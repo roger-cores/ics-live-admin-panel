@@ -77,10 +77,13 @@ angular.module('firebaseApp')
       // }
       console.log(refMasterData);
       console.log(refMasterData[$scope.selectedMasterData]);
+
       if($scope.tournamentMode === true){
+        if(!$scope.masterData.tournamentResult) $scope.masterData.tournamentResult = "";
         $scope.masterData.dateStart = $scope.masterData.dateStart.getTime();
         $scope.masterData.dateEnd = $scope.masterData.dateEnd.getTime();
       } else {
+        if(!$scope.masterData.roundUrl) $scope.masterData.roundUrl = "";
         $scope.masterData.publish = false;
         $scope.masterData.pgn = " ";
       }
@@ -97,7 +100,8 @@ angular.module('firebaseApp')
           dateStart: new Date(masterData.dateStart),
           dateEnd: new Date(masterData.dateEnd),
           tournamentAddress: masterData.tournamentAddress,
-          base_url: masterData.base_url
+          base_url: masterData.base_url,
+          tournamentResult: masterData.tournamentResult
         };
       } else {
         $scope.masterData = masterData;
@@ -108,17 +112,36 @@ angular.module('firebaseApp')
     }
 
     $scope.update = function(){
-      var index = $scope.masterData.$id;
-      var refMasterData = database.ref('/' + $scope.selectedMasterData + '/' + index);
-      $scope.masterData.dateStart = $scope.masterData.dateStart.getTime();
-      $scope.masterData.dateEnd = $scope.masterData.dateEnd.getTime();
-  		refMasterData.update({
-  			name:$scope.masterData.name,
-        dateStart:$scope.masterData.dateStart,
-        dateEnd:$scope.masterData.dateEnd,
-        tournamentAddress: $scope.masterData.tournamentAddress,
-        base_url: $scope.masterData.base_url
-  		});
+      console.log($scope.masterData);
+
+
+      if($scope.selectedMasterData === 'tournaments'){
+        var index = $scope.masterData.$id;
+        var refMasterData = database.ref('/' + $scope.selectedMasterData + '/' + index);
+        $scope.masterData.dateStart = $scope.masterData.dateStart.getTime();
+        $scope.masterData.dateEnd = $scope.masterData.dateEnd.getTime();
+        if(!$scope.masterData.tournamentResult) $scope.masterData.tournamentResult = "";
+    		refMasterData.update({
+    			name:$scope.masterData.name,
+          dateStart:$scope.masterData.dateStart,
+          dateEnd:$scope.masterData.dateEnd,
+          tournamentAddress: $scope.masterData.tournamentAddress,
+          base_url: $scope.masterData.base_url,
+          tournamentResult: $scope.masterData.tournamentResult
+    		});
+      } else {
+        var index = $scope.masterData.$id;
+        var refMasterData = database.ref('/tournaments');
+        var refRound = refMasterData.child($scope.navigation[0].selected.$id).child('rounds').child(index);
+        if(!$scope.masterData.roundUrl) $scope.masterData.roundUrl = "";
+        refRound.update({
+          name: $scope.masterData.name,
+          roundAddress: $scope.masterData.roundAddress,
+          roundUrl: $scope.masterData.roundUrl
+        });
+      }
+
+
 
       $scope.masterData = {};
       $scope.edittingMode = false;

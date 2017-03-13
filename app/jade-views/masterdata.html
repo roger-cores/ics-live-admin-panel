@@ -27,6 +27,10 @@
               <div ng-message="required">Please enter a round address</div>
             </div>
           </md-input-container>
+          <md-input-container flex="flex" style="width:100%;">
+            <label>Round Url</label>
+            <input name="roundUrl" ng-model="masterData.roundUrl"/>
+          </md-input-container>
           <div layout="row" layout-align="center center">
             <md-input-container>
               <md-button ng-click="update()" ng-disabled="!edittingMode || masterDataRoundForm.$invalid" class="md-raised md-primary">Update</md-button>
@@ -68,6 +72,10 @@
             <div ng-messages="masterDataForm.tournamentLocation.$error" md-auto-hide="false" class="errors">
               <div ng-message="required">Please enter a base url</div>
             </div>
+          </md-input-container>
+          <md-input-container ng-show="tournamentMode" flex="flex" style="width:100%">
+            <label>Result</label>
+            <input name="tournamentResult" ng-model="masterData.tournamentResult"/>
           </md-input-container>
           <div layout="row" layout-align="center center">
             <md-input-container>

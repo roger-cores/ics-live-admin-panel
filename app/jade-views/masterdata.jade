@@ -21,6 +21,10 @@ md-content(ng-show='pageOne')
             input(name = 'roundAddress', ng-model='masterData.roundAddress', required)
             div.errors(ng-messages="masterDataRoundForm.roundAddress.$error", md-auto-hide='false')
               div(ng-message='required') Please enter a round address
+          md-input-container(flex, style='width:100%;')
+            label Round Url
+            input(name = 'roundUrl', ng-model='masterData.roundUrl')
+
           div(layout='row', layout-align='center center')
             md-input-container
               md-button.md-raised.md-primary(ng-click='update()', ng-disabled='!edittingMode || masterDataRoundForm.$invalid') Update
@@ -56,6 +60,10 @@ md-content(ng-show='pageOne')
             input(name = 'tournamentLocation', ng-model='masterData.base_url', required)
             div.errors(ng-messages="masterDataForm.tournamentLocation.$error", md-auto-hide='false')
               div(ng-message='required') Please enter a base url
+
+          md-input-container(ng-show='tournamentMode', flex, style='width:100%')
+            label Result
+            input(name = 'tournamentResult', ng-model='masterData.tournamentResult')
 
 
           div(layout='row', layout-align='center center')
